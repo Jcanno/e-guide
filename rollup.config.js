@@ -1,27 +1,51 @@
 import path from 'path'
-import babelPlugin, { getBabelOutputPlugin } from '@rollup/plugin-babel'
+import babelPlugin from '@rollup/plugin-babel'
 import resolve from '@rollup/plugin-node-resolve'
 import { defineConfig } from 'rollup'
 import { terser } from 'rollup-plugin-terser'
+import serve from 'rollup-plugin-serve'
+import livereload from 'rollup-plugin-livereload'
 import pkg from './package.json'
 
-const extensions = ['.js', '.ts', '.tsx']
+const extensions = ['.js', '.ts', '.tsx', '.node', '.mjs']
 const { root } = path.parse(process.cwd())
+const isDevelopment = process.env.BUILD === 'development'
 
 function external(id) {
-  return !id.startsWith('.') && !id.startsWith(root)
+  return isDevelopment ? false : !id.startsWith('.') && !id.startsWith(root)
 }
 
-function createCommonJSConfig(input, output) {
+const dynamicPulgins = isDevelopment ? [
+  serve({
+    open: true,
+    port: 8080,
+    openPage: '/examples/index.html'
+  }),
+  livereload('es')
+] : [
+  terser({
+    compress: {
+      pure_getters: true,
+      unsafe: true,
+      unsafe_comps: true,
+      warnings: false,
+    },
+    format: {
+      comments: RegExp(`${pkg.name}`),
+    },
+  })
+]
+
+function createRollupConfig(input) {
   return defineConfig({
     input,
     output: [
-      { file: output, format: 'cjs', exports: 'named' },
+      { file: 'lib/index.js', format: 'cjs', exports: 'named' },
       { file: 'es/index.js', format: 'es' },
     ],
     external,
     plugins: [
-      resolve({ extensions }),
+      ...dynamicPulgins,
       babelPlugin({
         extensions,
         comments: false,
@@ -43,36 +67,12 @@ function createCommonJSConfig(input, output) {
             },
           ],
         ],
-
       }),
-      getBabelOutputPlugin({
-        presets: [
-          [
-            '@babel/preset-env',
-            {
-              exclude: [
-                '@babel/plugin-transform-regenerator'
-              ],
-            }
-          ]
-        ],
-      }),
-
-      terser({
-        compress: {
-          pure_getters: true,
-          unsafe: true,
-          unsafe_comps: true,
-          warnings: false,
-        },
-        format: {
-          comments: RegExp(`${pkg.name}`),
-        },
-      }),
+      resolve({ extensions }),
     ],
   })
 }
 
 export default function () {
-  return [createCommonJSConfig('src/index.tsx', 'lib/index.js')]
+  return [createRollupConfig('src/index.tsx')]
 }
