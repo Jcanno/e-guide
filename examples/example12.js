@@ -13,7 +13,9 @@ export function showExample12() {
             content: '你好',
             position: 'bottom',
           },
-          mask: null
+          mask: {
+            highlightDisabled: true
+          }
         }
       },
       {
@@ -24,7 +26,9 @@ export function showExample12() {
             content: '你好',
             position: 'top'
           },
-          mask: null
+          mask: {
+            highlightDisabled: true
+          }
         }
       },
       {
@@ -35,7 +39,9 @@ export function showExample12() {
             content: '你好',
             position: 'top',
           },
-          mask: null
+          mask: {
+            highlightDisabled: true
+          }
           // mask: {
           // }
         }
@@ -48,7 +54,9 @@ export function showExample12() {
             content: '你好',
             position: 'top',
           },
-          mask: null
+          mask: {
+            highlightDisabled: false
+          }
           // mask: {
           // }
         }

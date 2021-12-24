@@ -1,8 +1,5 @@
 import { getPadding, safe } from './utils'
 import { POPOVERID, POPOVERMARGIN } from './utils/constants'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// import Guide from './utils/my-jsx'
-import * as Guide from 'use-jsx'
 
 export type PopoverProps = {
   title?: string
@@ -234,75 +231,73 @@ export function Popover({
   ) : null
 
   return (
-    <>
+    <div
+      id={POPOVERID}
+      style={{
+        position: 'fixed',
+        opacity: !show ? 0 : 1,
+        display: show ? 'block' : 'none',
+        'background-color': '#fff',
+        'max-width': '400px',
+        'min-width': '250px',
+        'z-index': 999999999,
+        'border-radius': '5px',
+        padding: '15px',
+        color: '#2d2d2d',
+        'word-break': 'break-all',
+        'box-shadow': '0 0.5em 3em rgba(0, 0, 0, 0.3)',
+        ...animation,
+      }}
+      useDom={useDom}
+    >
       <div
-        id={POPOVERID}
         style={{
-          position: 'fixed',
-          opacity: !show ? 0 : 1,
-          display: show ? 'block' : 'none',
-          'background-color': '#fff',
-          'max-width': '400px',
-          'min-width': '250px',
-          'z-index': 999999999,
-          'border-radius': '5px',
-          padding: '15px',
-          color: '#2d2d2d',
-          'word-break': 'break-all',
-          'box-shadow': '0 0.5em 3em rgba(0, 0, 0, 0.3)',
-          ...animation,
+          'border-style': 'solid',
+          'border-width': '5px',
+          content: '',
+          position: 'absolute',
+          ...getBorderStyle(position),
         }}
-        useDom={useDom}
+      ></div>
+      <div
+        style={{
+          margin: '0 0 5px',
+          'line-height': 1.5,
+          'font-weight': 700,
+          font: '19px/normal sans-serif',
+        }}
       >
-        <div
-          style={{
-            'border-style': 'solid',
-            'border-width': '5px',
-            content: '',
-            position: 'absolute',
-            ...getBorderStyle(position),
-          }}
-        ></div>
-        <div
-          style={{
-            margin: '0 0 5px',
-            'line-height': 1.5,
-            'font-weight': 700,
-            font: '19px/normal sans-serif',
-          }}
-        >
-          {title}
-        </div>
-        <div
-          style={{
-            'line-height': 1.5,
-            'font-weight': 400,
-            font: '14px/normal sans-serif',
-          }}
-        >
-          {content}
-        </div>
-
-        {controlEle}
-        {closeBtn}
-        {!!stepLength && showStepTip ? (
-          <div
-            style={{
-              position: 'absolute',
-              top: '-12px',
-              left: '-10px',
-              background: '#007aff',
-              height: '25px',
-              padding: '0px 10px',
-              'border-radius': '10px',
-              color: 'white',
-              'text-align': 'center',
-              'font-size': '12px',
-              'line-height': 2,
-            }}
-          >{`${getCurrentStepIndex() + 1} / ${stepLength}`}</div>
-        ) : null}
+        {title}
       </div>
-    </>
+      <div
+        style={{
+          'line-height': 1.5,
+          'font-weight': 400,
+          font: '14px/normal sans-serif',
+        }}
+      >
+        {content}
+      </div>
+
+      {controlEle}
+      {closeBtn}
+      {!!stepLength && showStepTip ? (
+        <div
+          style={{
+            position: 'absolute',
+            top: '-12px',
+            left: '-10px',
+            background: '#007aff',
+            height: '25px',
+            padding: '0px 10px',
+            'border-radius': '10px',
+            color: 'white',
+            'text-align': 'center',
+            'font-size': '12px',
+            'line-height': 2,
+          }}
+        >{`${getCurrentStepIndex() + 1} / ${stepLength}`}</div>
+      ) : null}
+    </div>
   )
 }

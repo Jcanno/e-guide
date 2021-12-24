@@ -11,9 +11,6 @@
   },
   "module": "es/index.js",
   "types": "types/index.d.ts",
-  "maintainers": [
-    "liqing"
-  ],
   "files": [
     "es",
     "lib",
@@ -39,6 +36,6 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "use-jsx": "^0.0.2"
+    "use-jsx": "^0.0.6"
   }
 }

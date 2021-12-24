@@ -1,13 +1,12 @@
 import { getWindow, getPadding, safe, addOnePx } from './utils'
 import { CLIPID, MASKID } from './utils/constants'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import * as Guide from 'use-jsx'
 
 export type MaskProps = {
   padding?: number | [number, number]
   withAnimation?: boolean
   closeable?: boolean
   bgColor?: string
+  highlightDisabled?: boolean
 
   sizes?: Partial<DOMRect>
   close?: () => void
@@ -22,6 +21,7 @@ export function Mask({
   withAnimation = true,
   closeable = true,
   bgColor = 'rgb(0, 0, 0)',
+  highlightDisabled = false,
 
   show,
   close,
@@ -56,59 +56,73 @@ export function Mask({
   }
 
   return (
-    <div
-      id={MASKID}
-      style={{
-        opacity: !show ? 0 : 0.7,
-        left: '0px',
-        top: '0px',
-        position: 'fixed',
-        'z-index': 99999999,
-        'pointer-events': 'none',
-        color: bgColor,
-        ...animation,
-      }}
-      onclick={onMaskClick}
-    >
-      <svg version="1.1" width={windowWidth} height={windowHeight}>
-        <defs>
-          <clipPath id={CLIPID}>
-            <rect x={0} y={0} width={windowWidth} height={show ? top : 0} style={animation} />
-            <rect
-              x={0}
-              y={show ? top : 0}
-              width={show ? left : 0}
-              height={show ? height : windowHeight}
-              style={animation}
-            />
-            <rect
-              x={show ? left + width : windowWidth}
-              y={show ? top : 0}
-              width={show ? safe(windowWidth - width - left) : 0}
-              height={show ? height : windowHeight}
-              style={animation}
-            />
-            <rect
-              x={0}
-              y={show ? top + height : windowHeight}
-              width={windowWidth}
-              height={show ? safe(windowHeight - height - top) : 0}
-              style={animation}
-            />
-          </clipPath>
-        </defs>
-        <rect
+    <div>
+      <div
+        id={MASKID}
+        style={{
+          opacity: !show ? 0 : 0.7,
+          left: '0px',
+          top: '0px',
+          position: 'fixed',
+          'z-index': 99999999,
+          'pointer-events': 'none',
+          color: bgColor,
+          ...animation,
+        }}
+        onclick={onMaskClick}
+      >
+        <svg version="1.1" width={windowWidth} height={windowHeight}>
+          <defs>
+            <clipPath id={CLIPID}>
+              <rect x={0} y={0} width={windowWidth} height={show ? top : 0} style={animation} />
+              <rect
+                x={0}
+                y={show ? top : 0}
+                width={show ? left : 0}
+                height={show ? height : windowHeight}
+                style={animation}
+              />
+              <rect
+                x={show ? left + width : windowWidth}
+                y={show ? top : 0}
+                width={show ? safe(windowWidth - width - left) : 0}
+                height={show ? height : windowHeight}
+                style={animation}
+              />
+              <rect
+                x={0}
+                y={show ? top + height : windowHeight}
+                width={windowWidth}
+                height={show ? safe(windowHeight - height - top) : 0}
+                style={animation}
+              />
+            </clipPath>
+          </defs>
+          <rect
+            style={{
+              x: 0,
+              y: 0,
+              width: `${windowWidth}px`,
+              height: `${windowHeight}px`,
+              fill: 'currentcolor',
+              'pointer-events': 'auto',
+              'clip-path': `url(#${CLIPID})`,
+            }}
+          />
+        </svg>
+      </div>
+      {highlightDisabled ? (
+        <div
           style={{
-            x: 0,
-            y: 0,
-            width: `${windowWidth}px`,
-            height: `${windowHeight}px`,
-            fill: 'currentcolor',
-            'pointer-events': 'auto',
-            'clip-path': `url(#${CLIPID})`,
+            position: 'fixed',
+            left: `${left}px`,
+            top: `${top}px`,
+            width: `${width || 0}px`,
+            height: `${height || 0}px`,
+            opacity: 0,
           }}
-        />
-      </svg>
+        ></div>
+      ) : null}
     </div>
   )
 }

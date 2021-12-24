@@ -2195,10 +2195,10 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-use-jsx@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/use-jsx/-/use-jsx-0.0.2.tgz#46b5766ae3ceab002223d35a465c40557c9f8fe9"
-  integrity sha512-C8vhASC26NdbyX0j5Hv9rwgv2qWxhP7OkZtj+2pwKajrbAWysy2OfdSvJFlucFIYMLXCn0UNKXV96G57nAn2MA==
+use-jsx@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/use-jsx/-/use-jsx-0.0.6.tgz#a088f14249ec232f3b3f04345d98b1c6c72380fc"
+  integrity sha512-kAlb3prD2v1yaQaId9Zxq8BRO0PYgaToPqUUVDtlWO4sZMW+o6YROmGqKQ8j3XgV68wFBc5pqpoSyeQM4JHJrg==
 
 v8-compile-cache@^2.0.3:
   version "2.3.0"

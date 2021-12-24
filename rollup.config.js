@@ -55,15 +55,13 @@ function createRollupConfig(input) {
             '@babel/plugin-transform-typescript',
             {
               isTSX: true,
-              jsxPragma: 'Guide.createElement',
-              jsxPragmaFrag: 'Guide.Fragment',
             },
           ],
           [
             '@babel/plugin-transform-react-jsx',
             {
-              pragma: 'Guide.createElement',
-              pragmaFrag: 'Guide.Fragment',
+              runtime: 'automatic',
+              importSource: 'use-jsx'
             },
           ],
         ],
