@@ -95,7 +95,7 @@ function guide(target: string | Element | Steps, options?: MergeOptions) {
     if (!element) {
       console.warn("can't found guide element")
 
-      return null
+      return {}
     }
 
     const close = function close() {

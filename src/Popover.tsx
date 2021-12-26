@@ -3,7 +3,7 @@ import { POPOVERID, POPOVERMARGIN } from './utils/constants'
 
 export type PopoverProps = {
   title?: string
-  content?: string | Element
+  content?: string
   position?: 'bottom' | 'top' | 'left' | 'right'
   closeable?: boolean
   withAnimation?: boolean
