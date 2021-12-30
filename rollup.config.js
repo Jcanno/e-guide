@@ -7,7 +7,7 @@ import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 import pkg from './package.json'
 
-const extensions = ['.js', '.ts', '.tsx', '.node', '.mjs']
+const extensions = ['.js', '.ts', '.tsx']
 const { root } = path.parse(process.cwd())
 const isDevelopment = process.env.BUILD === 'development'
 
