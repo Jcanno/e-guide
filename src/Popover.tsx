@@ -1,10 +1,24 @@
 import { getPadding, safe } from './utils'
-import { POPOVERID, POPOVERMARGIN } from './utils/constants'
+import { POPOVERARROWWIDTH, POPOVERID, POPOVERMARGIN } from './utils/constants'
+
+type Position =
+  | 'top'
+  | 'topRight'
+  | 'topLeft'
+  | 'bottom'
+  | 'bottomRight'
+  | 'bottomLeft'
+  | 'left'
+  | 'leftTop'
+  | 'leftBottom'
+  | 'right'
+  | 'rightTop'
+  | 'rightBottom'
 
 export type PopoverProps = {
   title?: string
   content?: string
-  position?: 'bottom' | 'top' | 'left' | 'right'
+  position?: Position
   closeable?: boolean
   withAnimation?: boolean
   control?: boolean
@@ -49,35 +63,88 @@ export function Popover({
       }
     : null
 
-  const getBorderStyle = (position: 'bottom' | 'top' | 'left' | 'right') => {
-    let result = null
+  const getArrowBorderStyle = (position: Position) => {
+    let result = {}
 
     switch (position) {
       case 'top':
-        result = {
-          bottom: '-10px',
-          'border-color': '#fff transparent transparent',
-        }
+      case 'topLeft':
+      case 'topRight':
+        result['border-color'] = '#fff transparent transparent'
+        const topPositionStyle = {
+          top: {
+            bottom: '-10px',
+            left: `calc(50% - ${POPOVERARROWWIDTH}px)`,
+          },
+          topLeft: {
+            bottom: '-10px',
+            left: '10px',
+          },
+          topRight: {
+            bottom: '-10px',
+            right: '10px',
+          },
+        }[position]
+        Object.assign(result, topPositionStyle)
         break
       case 'bottom':
-        result = {
-          top: '-10px',
-          'border-color': 'transparent transparent #fff',
-        }
+      case 'bottomLeft':
+      case 'bottomRight':
+        result['border-color'] = 'transparent transparent #fff'
+        const bottomPositionStyle = {
+          bottom: {
+            top: '-10px',
+            left: `calc(50% - ${POPOVERARROWWIDTH}px)`,
+          },
+          bottomLeft: {
+            top: '-10px',
+            left: '10px',
+          },
+          bottomRight: {
+            top: '-10px',
+            right: '10px',
+          },
+        }[position]
+        Object.assign(result, bottomPositionStyle)
         break
       case 'right':
-        result = {
-          top: '10px',
-          left: '-10px',
-          'border-color': 'transparent #fff transparent transparent',
-        }
+      case 'rightTop':
+      case 'rightBottom':
+        result['border-color'] = 'transparent #fff transparent transparent'
+        const rightPositionStyle = {
+          right: {
+            top: `calc(50% - ${POPOVERARROWWIDTH}px)`,
+            left: '-10px',
+          },
+          rightTop: {
+            top: '10px',
+            left: '-10px',
+          },
+          rightBottom: {
+            left: '-10px',
+            bottom: '10px',
+          },
+        }[position]
+        Object.assign(result, rightPositionStyle)
         break
       case 'left':
-        result = {
-          top: '10px',
-          right: '-10px',
-          'border-color': 'transparent transparent transparent #fff',
-        }
+      case 'leftTop':
+      case 'leftBottom':
+        result['border-color'] = 'transparent transparent transparent #fff'
+        const leftPositionStyle = {
+          left: {
+            top: `calc(50% - ${POPOVERARROWWIDTH}px)`,
+            right: '-10px',
+          },
+          leftTop: {
+            right: '-10px',
+          },
+          leftBottom: {
+            right: '-10px',
+            bottom: '10px',
+          },
+        }[position]
+        Object.assign(result, leftPositionStyle)
         break
       default:
         break
@@ -89,22 +156,50 @@ export function Popover({
   const useDom = (dom: HTMLElement) => {
     const domRect = dom.getBoundingClientRect()
     const result: any = {}
+    const halfDomWidth = domRect.width / 2
+    const halfElementWidth = sizes.width / 2
+    const halfDomHeight = domRect.height / 2
+    const halfElementHeight = sizes.height / 2
 
     switch (position) {
-      case 'bottom':
       case 'top':
-        result.left = safe(sizes.left - px) || 0
-        result.top = {
-          bottom: safe(sizes.top + sizes.height + py + POPOVERMARGIN) || 0,
-          top: safe(sizes.top - py - domRect.height - POPOVERMARGIN) || 0,
+      case 'topLeft':
+      case 'topRight':
+        result.left = {
+          top: safe(sizes.left - px - halfDomWidth + halfElementWidth) || 0,
+          topLeft: safe(sizes.left - px) || 0,
+          topRight: safe(sizes.left - px - domRect.width + sizes.width) || 0,
         }[position]
+        result.top = safe(sizes.top - py - domRect.height - POPOVERMARGIN) || 0
+        break
+      case 'bottom':
+      case 'bottomLeft':
+      case 'bottomRight':
+        result.left = {
+          bottom: safe(sizes.left - px - halfDomWidth + halfElementWidth) || 0,
+          bottomLeft: safe(sizes.left - px) || 0,
+          bottomRight: safe(sizes.left - px - domRect.width + sizes.width) || 0,
+        }[position]
+        result.top = safe(sizes.top + sizes.height + py + POPOVERMARGIN) || 0
         break
       case 'left':
+      case 'leftTop':
+      case 'leftBottom':
+        result.left = safe(sizes.left - px - domRect.width - POPOVERMARGIN) || 0
+        result.top = {
+          left: safe(sizes.top - py - halfDomHeight + halfElementHeight) || 0,
+          leftTop: safe(sizes.top - py) || 0,
+          leftBottom: safe(sizes.top - py + sizes.height - domRect.height) || 0,
+        }[position]
+        break
       case 'right':
-        result.top = safe(sizes.top - py) || 0
-        result.left = {
-          left: safe(sizes.left - px - domRect.width - POPOVERMARGIN) || 0,
-          right: safe(sizes.left + sizes.width + px + POPOVERMARGIN) || 0,
+      case 'rightBottom':
+      case 'rightTop':
+        result.left = safe(sizes.left + sizes.width + px + POPOVERMARGIN) || 0
+        result.top = {
+          right: safe(sizes.top - py - halfDomHeight + halfElementHeight) || 0,
+          rightTop: safe(sizes.top - py) || 0,
+          rightBottom: safe(sizes.top - py + sizes.height - domRect.height) || 0,
         }[position]
         break
       default:
@@ -256,7 +351,7 @@ export function Popover({
           'border-width': '5px',
           content: '',
           position: 'absolute',
-          ...getBorderStyle(position),
+          ...getArrowBorderStyle(position),
         }}
       ></div>
       <div
