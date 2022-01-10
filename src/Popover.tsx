@@ -64,7 +64,7 @@ export function Popover({
     : null
 
   const getArrowBorderStyle = (position: Position) => {
-    let result = {}
+    const result = {}
 
     switch (position) {
       case 'top':

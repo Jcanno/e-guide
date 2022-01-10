@@ -179,7 +179,7 @@ function guide(target: string | Element | Steps, options?: MergeOptions) {
       let currentStepIndex = 0
       let currentStep = target[currentStepIndex]
 
-      const setStepTo = async (index: number, mathAdd: boolean = false) => {
+      const setStepTo = async (index: number, mathAdd = false) => {
         const nextStepIndex = mathAdd ? currentStepIndex + index : index
         const isGoNextStep = currentStepIndex + 1 === nextStepIndex
         const isGoPrevStep = currentStepIndex - 1 === nextStepIndex

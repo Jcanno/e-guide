@@ -1,4 +1,4 @@
-import { STORAGEKEY } from "./constants"
+import { STORAGEKEY } from './constants'
 
 export function safe(sum: number): number {
   return sum < 0 ? 0 : sum
@@ -76,7 +76,7 @@ export class Event {
     eventType: string,
     fn: (...args: any[]) => any,
     source: Window | Document | Element,
-    namespace: string = 'default',
+    namespace = 'default',
   ) {
     if (source && source.addEventListener) {
       source.addEventListener(eventType, fn)
@@ -91,13 +91,13 @@ export class Event {
     eventType: string,
     fn: (...args: any[]) => any,
     source: Window | Document | Element,
-    namespace: string = 'default',
+    namespace = 'default',
   ) {
     this.off(eventType, source, namespace)
     this.on(eventType, fn, source, namespace)
   }
 
-  off(eventType: string, source: Window | Document | Element, namespace: string = 'default') {
+  off(eventType: string, source: Window | Document | Element, namespace = 'default') {
     const event = this.events?.[namespace]?.[eventType]
 
     if (event && source && source.removeEventListener) {
@@ -118,35 +118,35 @@ const getGuideStorage = () => {
 }
 
 export const setStepGuidIdToStorage = (id: string, noMoreShow: boolean) => {
-  if(!id) return
+  if (!id) return
   const cacheGuideData = localStorage.getItem(STORAGEKEY)
 
-  if(cacheGuideData) {
+  if (cacheGuideData) {
     try {
       const data = JSON.parse(cacheGuideData)
 
       data[id] = {
-        noMoreShow
+        noMoreShow,
       }
       setGuideStorage(data)
     } catch (error) {
       setGuideStorage({
         [id]: {
-          noMoreShow
-        }
+          noMoreShow,
+        },
       })
     }
-  }else {
+  } else {
     setGuideStorage({
       [id]: {
-        noMoreShow
-      }
+        noMoreShow,
+      },
     })
   }
 }
 
 export const isCanShowGuideByStroage = (id: string) => {
-  if(!id) return true
+  if (!id) return true
 
   const data = getGuideStorage()
   const item = data?.[id]

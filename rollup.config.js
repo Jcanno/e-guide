@@ -15,26 +15,28 @@ function external(id) {
   return isDevelopment ? false : !id.startsWith('.') && !id.startsWith(root)
 }
 
-const dynamicPulgins = isDevelopment ? [
-  serve({
-    open: true,
-    port: 8080,
-    openPage: '/examples/index.html'
-  }),
-  livereload('es')
-] : [
-  terser({
-    compress: {
-      pure_getters: true,
-      unsafe: true,
-      unsafe_comps: true,
-      warnings: false,
-    },
-    format: {
-      comments: RegExp(`${pkg.name}`),
-    },
-  })
-]
+const dynamicPulgins = isDevelopment
+  ? [
+      serve({
+        open: true,
+        port: 8080,
+        openPage: '/examples/index.html',
+      }),
+      livereload('es'),
+    ]
+  : [
+      terser({
+        compress: {
+          pure_getters: true,
+          unsafe: true,
+          unsafe_comps: true,
+          warnings: false,
+        },
+        format: {
+          comments: RegExp(`${pkg.name}`),
+        },
+      }),
+    ]
 
 function createRollupConfig(input) {
   return defineConfig({
@@ -61,7 +63,7 @@ function createRollupConfig(input) {
             '@babel/plugin-transform-react-jsx',
             {
               runtime: 'automatic',
-              importSource: 'use-jsx'
+              importSource: 'use-jsx',
             },
           ],
         ],
