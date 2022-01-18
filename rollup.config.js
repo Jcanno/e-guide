@@ -51,8 +51,9 @@ function createRollupConfig(input) {
       babelPlugin({
         extensions,
         comments: false,
-        babelHelpers: 'bundled',
+        babelHelpers: 'runtime',
         plugins: [
+          '@babel/plugin-transform-runtime',
           [
             '@babel/plugin-transform-typescript',
             {

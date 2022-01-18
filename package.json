@@ -1,5 +1,5 @@
 {
-  "name": "guide",
+  "name": "e-guide",
   "version": "0.0.1",
   "main": "lib/index.js",
   "license": "MIT",
@@ -18,8 +18,8 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.16.5",
-    "@babel/plugin-transform-async-to-generator": "^7.16.0",
     "@babel/plugin-transform-react-jsx": "^7.16.0",
+    "@babel/plugin-transform-runtime": "^7.16.8",
     "@babel/plugin-transform-typescript": "^7.16.1",
     "@babel/preset-env": "^7.16.0",
     "@rollup/plugin-babel": "^5.3.0",
@@ -31,13 +31,13 @@
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.4.1",
     "rollup": "^2.59.0",
-    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-serve": "^1.1.0",
     "rollup-plugin-terser": "^7.0.2",
     "typescript": "^4.4.4"
   },
   "dependencies": {
+    "@babel/runtime": "^7.16.7",
     "use-jsx": "^0.0.6"
   }
 }
