@@ -10,8 +10,9 @@ import {
 } from './utils'
 import * as Guide from 'use-jsx'
 import { Popover, PopoverProps } from './Popover'
+import { MASKID } from './utils/constants'
 
-type Options = {
+export type Options = {
   mask?: Partial<Pick<MaskProps, 'closeable' | 'bgColor' | 'withAnimation' | 'padding'>>
   popover?: Partial<
     Pick<
@@ -23,7 +24,7 @@ type Options = {
   beforeClose?: (currentStepIndex?: number) => void
 }
 
-type StepOptions = {
+export type StepOptions = {
   onNextStep?: (currentStepIndex: number) => void
   onPrevStep?: (currentStepIndex: number) => void
   stepGuideId?: string
@@ -32,22 +33,22 @@ type StepOptions = {
   noMoreText?: string
 }
 
-type Steps = Array<{ element: string | Element; options?: Options }>
+export type Steps = Array<{ element: string | Element; options?: Options }>
 
-type MergeOptions = StepOptions & Options
+export type MergeOptions = StepOptions & Options
 
+let originScroll = ''
 const event = new Event()
-const originScroll = document.documentElement.style.overflow
+const getOriginScroll = () => document.documentElement.style.overflow
 const setScrollDisabled = (disabled: boolean) => {
   document.documentElement.style.overflow = disabled ? 'hidden' : originScroll
 }
+const isGuideInited = () => !!document.getElementById(MASKID)
 
 function initGuide() {
   Guide.render(<Mask show={false} withAnimation={false} />, document.body, 'mask')
   Guide.render(<Popover show={false} />, document.body, 'popover')
 }
-
-initGuide()
 
 const defaultMaskOptions: Options['mask'] = {
   padding: 10,
@@ -80,6 +81,9 @@ function guide(
 }
 function guide(target: string | Element | Steps, options?: MergeOptions) {
   const guideElement = (target: string | Element, options?: Options, currentStepIndex?: number) => {
+    if (!isGuideInited()) {
+      initGuide()
+    }
     const {
       mask = defaultMaskOptions,
       popover = defaultPopoverOptions,
@@ -154,6 +158,7 @@ function guide(target: string | Element | Steps, options?: MergeOptions) {
         'popover',
       )
 
+      scrollDisabled && (originScroll = getOriginScroll())
       setScrollDisabled(scrollDisabled)
     }
 

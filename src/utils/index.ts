@@ -155,7 +155,3 @@ export const isCanShowGuideByStroage = (id: string) => {
 }
 
 export const noop = () => {}
-
-export const addOnePx = (num: number) => {
-  return num > 0 ? Math.round(num) + 1 : 0
-}

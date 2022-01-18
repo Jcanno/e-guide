@@ -1,4 +1,4 @@
-import { getWindow, getPadding, safe, addOnePx } from './utils'
+import { getWindow, getPadding, safe } from './utils'
 import { CLIPID, MASKID } from './utils/constants'
 
 export type MaskProps = {
