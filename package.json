@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "rollup -c --environment BUILD:development --watch",
-    "build": "yarn types & rollup -c --environment BUILD:production",
+    "build": "pnpm types & rollup -c --environment BUILD:production",
     "prebuild": "rm -rf types es lib",
     "types": "tsc --emitDeclarationOnly"
   },
