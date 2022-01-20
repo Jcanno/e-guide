@@ -3,6 +3,18 @@
   "version": "0.0.1",
   "main": "lib/index.js",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jcanno/e-guide/issues"
+  },
+  "homepage": "https://github.com/Jcanno/e-guide/blob/master/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jcanno/e-guide.git"
+  },
+  "keywords": [
+    "guide",
+    "tour"
+  ],
   "scripts": {
     "dev": "rollup -c --environment BUILD:development --watch",
     "build": "pnpm types & rollup -c --environment BUILD:production",
