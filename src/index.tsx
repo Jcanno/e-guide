@@ -7,6 +7,8 @@ import {
   noop,
   isCanShowGuideByStroage,
   setStepGuidIdToStorage,
+  getOriginScroll,
+  setPageScroll,
 } from './utils'
 import * as Guide from 'use-jsx'
 import { Popover, PopoverProps } from './Popover'
@@ -37,12 +39,10 @@ export type Steps = Array<{ element: string | Element; options?: Options }>
 
 export type MergeOptions = StepOptions & Options
 
-let originScroll = ''
 const event = new Event()
-const getOriginScroll = () => document.documentElement.style.overflow
-const setScrollDisabled = (disabled: boolean) => {
-  document.documentElement.style.overflow = disabled ? 'hidden' : originScroll
-}
+
+const ORIGIN_SCROLL = getOriginScroll()
+
 const isGuideInited = () => !!document.getElementById(MASKID)
 
 function initGuide() {
@@ -50,14 +50,14 @@ function initGuide() {
   Guide.render(<Popover show={false} />, document.body, 'popover')
 }
 
-const defaultMaskOptions: Options['mask'] = {
+const DEFAULT_MASK_OPTIONS: Options['mask'] = {
   padding: 10,
   withAnimation: true,
   closeable: true,
   bgColor: 'rgb(0, 0, 0)',
 }
 
-const defaultPopoverOptions: Options['popover'] = {
+const DEFAULT_POPOVER_OPTIONS: Options['popover'] = {
   title: '',
   withAnimation: true,
   closeable: true,
@@ -85,13 +85,13 @@ function guide(target: string | Element | Steps, options?: MergeOptions) {
       initGuide()
     }
     const {
-      mask = defaultMaskOptions,
-      popover = defaultPopoverOptions,
+      mask = DEFAULT_MASK_OPTIONS,
+      popover = DEFAULT_POPOVER_OPTIONS,
       scrollDisabled = false,
       beforeClose,
     } = options || {
-      mask: defaultMaskOptions,
-      popover: defaultPopoverOptions,
+      mask: DEFAULT_MASK_OPTIONS,
+      popover: DEFAULT_POPOVER_OPTIONS,
       scrollDisabled: false,
     }
     const element = findTargetElement(target)
@@ -120,7 +120,7 @@ function guide(target: string | Element | Steps, options?: MergeOptions) {
         Guide.render(<Popover show={false} />, document.body, 'popover')
       }
 
-      setScrollDisabled(false)
+      setPageScroll(false, ORIGIN_SCROLL)
 
       closeMask()
       closePopover()
@@ -158,8 +158,7 @@ function guide(target: string | Element | Steps, options?: MergeOptions) {
         'popover',
       )
 
-      scrollDisabled && (originScroll = getOriginScroll())
-      setScrollDisabled(scrollDisabled)
+      setPageScroll(scrollDisabled)
     }
 
     event.bindOne('resize', render, window)
