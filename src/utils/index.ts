@@ -155,3 +155,11 @@ export const isCanShowGuideByStroage = (id: string) => {
 }
 
 export const noop = () => {}
+
+export const getOriginScroll = () => document.documentElement.style.overflow
+
+const HIDDEN_SCROLL = 'hidden'
+
+export const setPageScroll = (scrollDisabled: boolean, scroll = '') => {
+  document.documentElement.style.overflow = scrollDisabled ? HIDDEN_SCROLL : scroll
+}
