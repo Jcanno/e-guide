@@ -50,6 +50,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.16.7",
-    "use-jsx": "^0.0.6"
+    "use-jsx": "^0.0.8"
   }
 }

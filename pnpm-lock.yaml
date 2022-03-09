@@ -20,11 +20,11 @@ specifiers:
   rollup-plugin-serve: ^1.1.0
   rollup-plugin-terser: ^7.0.2
   typescript: ^4.4.4
-  use-jsx: ^0.0.6
+  use-jsx: ^0.0.8
 
 dependencies:
   '@babel/runtime': 7.16.7
-  use-jsx: 0.0.6
+  use-jsx: 0.0.8
 
 devDependencies:
   '@babel/core': 7.16.7
@@ -2734,8 +2734,8 @@ packages:
       punycode: 2.1.1
     dev: true
 
-  /use-jsx/0.0.6:
-    resolution: {integrity: sha512-kAlb3prD2v1yaQaId9Zxq8BRO0PYgaToPqUUVDtlWO4sZMW+o6YROmGqKQ8j3XgV68wFBc5pqpoSyeQM4JHJrg==}
+  /use-jsx/0.0.8:
+    resolution: {integrity: sha512-pZ06tBmakq8eyje75HPgNuM3pESO7eILiFtUNBWUPwmA+HQYPVd50BWCT7Pnr223xIQ4NIhev2jxX1MOdkQIng==}
     dev: false
 
   /v8-compile-cache/2.3.0:
