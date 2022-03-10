@@ -38,6 +38,32 @@ const dynamicPulgins = isDevelopment
       }),
     ]
 
+const plugins = [
+  ...dynamicPulgins,
+  babelPlugin({
+    extensions,
+    comments: false,
+    babelHelpers: 'runtime',
+    plugins: [
+      '@babel/plugin-transform-runtime',
+      [
+        '@babel/plugin-transform-typescript',
+        {
+          isTSX: true,
+        },
+      ],
+      [
+        '@babel/plugin-transform-react-jsx',
+        {
+          runtime: 'automatic',
+          importSource: 'use-jsx',
+        },
+      ],
+    ],
+  }),
+  resolve({ extensions }),
+]
+
 function createRollupConfig(input) {
   return defineConfig({
     input,
@@ -46,34 +72,18 @@ function createRollupConfig(input) {
       { file: 'es/index.js', format: 'es' },
     ],
     external,
-    plugins: [
-      ...dynamicPulgins,
-      babelPlugin({
-        extensions,
-        comments: false,
-        babelHelpers: 'runtime',
-        plugins: [
-          '@babel/plugin-transform-runtime',
-          [
-            '@babel/plugin-transform-typescript',
-            {
-              isTSX: true,
-            },
-          ],
-          [
-            '@babel/plugin-transform-react-jsx',
-            {
-              runtime: 'automatic',
-              importSource: 'use-jsx',
-            },
-          ],
-        ],
-      }),
-      resolve({ extensions }),
-    ],
+    plugins,
+  })
+}
+
+function createUMDOutput(input) {
+  return defineConfig({
+    input,
+    output: [{ file: 'dist/e-guide.js', format: 'umd', name: 'Guide' }],
+    plugins,
   })
 }
 
 export default function () {
-  return [createRollupConfig('src/index.tsx')]
+  return [createRollupConfig('src/index.tsx'), createUMDOutput('src/index.tsx')]
 }

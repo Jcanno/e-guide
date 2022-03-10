@@ -1,6 +1,6 @@
 {
   "name": "e-guide",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "lib/index.js",
   "license": "MIT",
   "bugs": {
@@ -15,6 +15,8 @@
     "guide",
     "tour"
   ],
+  "unpkg": "dist/e-guide.js",
+  "jsdelivr": "dist/e-guide.js",
   "scripts": {
     "dev": "rollup -c --environment BUILD:development --watch",
     "build": "pnpm types & rollup -c --environment BUILD:production",
@@ -26,6 +28,7 @@
   "files": [
     "es",
     "lib",
+    "dist",
     "types"
   ],
   "devDependencies": {
