@@ -38,7 +38,7 @@
 | options.onNextStep              | 下一步回调，可执行异步操作                                                                                                | (currentStepIndex: number) => void                                                                                                                                                                                                                         |
 | options.onPrevStep              | 上一步回调，可执行异步操作                                                                                                | (currentStepIndex: number) => void                                                                                                                                                                                                                         |
 | options.stepGuideId             | 手动配置此次步骤演示的唯一 id                                                                                             | string                                                                                                                                                                                                                                                     |
-| options.showOnce                | 只展示一次，需要配置 stepGuideId，否则无效                                                                                | boolean                                                                                                                                                                                                                                                    | false                                                                                |
+| options.showOnce                | 只展示一次，需要配置 stepGuideId，否则无效，guide内部会将该id进行本地缓存，若清空缓存，则会展示高亮导航                                                                                | boolean                                                                                                                                                                                                                                                    | false                                                                                |
 | options.noMoreShow              | 是否展示不再提示按钮，需要配置 stepGuideId，否则无效                                                                      | boolean                                                                                                                                                                                                                                                    | false                                                                                |
 | options.noMoreText              | 不再提示文案                                                                                                              | string                                                                                                                                                                                                                                                     | '不再提示'                                                                           |
 | GuideReturn                     | 导航返回对象，该对象提供一些方法控制导航功能                                                                              | object                                                                                                                                                                                                                                                     |
@@ -314,4 +314,21 @@ function App() {
     </button>
   )
 }
+```
+
+### 运行示例
+
+```js
+git clone git@github.com:Jcanno/e-guide.git
+
+// 使用vscode命令打开项目
+code e-guide
+
+// 优先使用pnpm安装依赖
+pnpm install
+// 也可以使用yarn
+yarn install
+
+// 运行项目示例
+pnpm dev 或 yarn dev
 ```
