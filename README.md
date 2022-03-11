@@ -10,12 +10,25 @@
 - 只有一个主方法
 - 遮罩层和弹出层功能任意搭配
 
+### 安装
+
+```shell
+# npm
+npm install e-guide
+
+# yarn
+yarn install e-guide
+
+# 直接使用CDN服务获取js文件，全局变量为Guide
+<script src="https://cdn.jsdelivr.net/npm/e-guide"></script>
+<script src="https://unpkg.com/e-guide"></script>
+
+```
+
 ### API
 
-
-
-|  属性/方法    | 描述   |    类型          |    默认值      |
-|  ----        | ----  |    ----         |    ----       |
+| 属性/方法                       | 描述                                                                                                                      | 类型                                                                                                                                                                                                                                                       | 默认值                                                                               |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------- |
 | guide                           | 导航高亮主函数                                                                                                            | (target: string \| Element \| Array<{ element: string \| Element; options?: Options }>, options: Options) => GuideReturn                                                                                                                                   |                                                                                      |
 | target                          | 导航高亮目标元素, 当为 string 时，该参数需要为元素选择器，当为 Element 时，需要为 DOM 元素， 当为数组时，开启导航步骤功能 | string \| Element \| Array<{ element: string \| Element; options?: Options }>Object                                                                                                                                                                        |
 | options                         | 导航高亮配置, 分为遮罩层、弹出层及公共配置                                                                                | { mask?: Mask, popover?: Popover, scrollDisabled?: boolean, beforeClose?: () => void }                                                                                                                                                                     |
@@ -38,7 +51,7 @@
 | options.onNextStep              | 下一步回调，可执行异步操作                                                                                                | (currentStepIndex: number) => void                                                                                                                                                                                                                         |
 | options.onPrevStep              | 上一步回调，可执行异步操作                                                                                                | (currentStepIndex: number) => void                                                                                                                                                                                                                         |
 | options.stepGuideId             | 手动配置此次步骤演示的唯一 id                                                                                             | string                                                                                                                                                                                                                                                     |
-| options.showOnce                | 只展示一次，需要配置 stepGuideId，否则无效，guide内部会将该id进行本地缓存，若清空缓存，则会展示高亮导航                                                                                | boolean                                                                                                                                                                                                                                                    | false                                                                                |
+| options.showOnce                | 只展示一次，需要配置 stepGuideId，否则无效，guide 内部会将该 id 进行本地缓存，若清空缓存，则会展示高亮导航                | boolean                                                                                                                                                                                                                                                    | false                                                                                |
 | options.noMoreShow              | 是否展示不再提示按钮，需要配置 stepGuideId，否则无效                                                                      | boolean                                                                                                                                                                                                                                                    | false                                                                                |
 | options.noMoreText              | 不再提示文案                                                                                                              | string                                                                                                                                                                                                                                                     | '不再提示'                                                                           |
 | GuideReturn                     | 导航返回对象，该对象提供一些方法控制导航功能                                                                              | object                                                                                                                                                                                                                                                     |
